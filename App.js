@@ -19,6 +19,7 @@ const App = () => {
   const showFoundToast = () =>{
     ToastAndroid.showWithGravity("User Found!", ToastAndroid.SHORT, ToastAndroid.CENTER);
   }
+  // This is from navigation
 
   const fetchAPI = async () => {
     try {
