@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Picker,
   ToastAndroid,
 } from 'react-native';
+import GlobalFont from 'react-native-global-font'
 
 const Home = ({navigation, route}) => {
   const [platform, setPlatform] = useState('origin');
@@ -19,6 +20,10 @@ const Home = ({navigation, route}) => {
   const [legends, setLegends] = useState({});
 
   const API_KEY = '5dec546c-dca5-47a1-9436-8d6ecdccbc25';
+
+  useEffect(()=>{
+    GlobalFont.applyGlobal('Montserrat-Regular');
+  },[]);
 
   const fetchAPI = async () => {
     try {
