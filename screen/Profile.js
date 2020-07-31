@@ -146,6 +146,9 @@ const styles = StyleSheet.create({
     width: 400,
     paddingBottom: 10,
     marginBottom: 5,
+    borderWidth: 1,
+    borderColor: '#d9d9d9',
+    borderRadius: 20/2,
     //backgroundColor: '#e3e3e3'
   },
   legendImage: {

@@ -13,20 +13,24 @@ import {
 import GlobalFont from 'react-native-global-font'
 
 const Home = ({navigation, route}) => {
+  // Initialize State
   const [platform, setPlatform] = useState('origin');
   const [username, setUsername] = useState('');
   const [userDetails, setUserDetails] = useState({});
   const [userStats, setUserStats] = useState({});
-  const [legends, setLegends] = useState({});
 
+  // API KEY
   const API_KEY = '5dec546c-dca5-47a1-9436-8d6ecdccbc25';
 
+  // Make use font globally
   useEffect(()=>{
     GlobalFont.applyGlobal('Montserrat-Regular');
   },[]);
 
   const fetchAPI = async () => {
+    // Fetching API
     try {
+      let legends = []
       console.log(username, platform);
       const response = await fetch(
         `https://public-api.tracker.gg/v2/apex/standard/profile/${platform}/${username}`,
@@ -37,19 +41,21 @@ const Home = ({navigation, route}) => {
         },
       );
       const data = await response.json();
-      setUserDetails(data.data.platformInfo);
-      setUserStats(data.data.segments[0].stats);
-      setLegends(data.data.segments.filter((leg) => {
+      setUserDetails(data.data.platformInfo); // Set state for setUserDetails
+      setUserStats(data.data.segments[0].stats); // Set state for setUserStats
+      // Return list of legends
+      legends = data.data.segments.filter((leg) => {
         if (leg.type == "legend") {
           return leg;
         }
       })
       .map((obj) => {
         return obj;
-      }));
-      console.log(legends)
+      });
+
+      // Navigate if username is exist and pasing data using route body
       if (data) {
-        navigation.navigate('Profile', {detail: userDetails, stats: userStats, legends: legends});
+        navigation.navigate('Profile', {detail: data.data.platformInfo, stats: data.data.segments[0].stats, legends: legends});
       }
     } catch (error) {
       console.log('Opps Something error', error);
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'darkslateblue',
+    backgroundColor: '#404040',
   },
   input: {
     width: 300,
